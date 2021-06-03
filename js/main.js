@@ -5,20 +5,13 @@ function loadMap() {
         "esri/views/MapView",
 
         "esri/layers/FeatureLayer",
-        "esri/widgets/Editor",
         "esri/renderers/Renderer",
         "esri/renderers/SimpleRenderer",
-        "esri/smartMapping/renderers/color",
-        "esri/smartMapping/renderers/size",
-        "esri/renderers/ClassBreaksRenderer",
-        "esri/renderers/visualVariables/SizeVariable",
-        "esri/renderers/visualVariables/ColorVariable",
         "esri/widgets/Legend",
-        "esri/widgets/Expand"
-    ], function (esriConfig, Map, MapView, FeatureLayer, Editor,
-        Renderer, SimpleRenderer, colorRendererCreator, sizeRendererCreator,
-        ClassBreaksRenderer, SizeVariable, ColorVariable, Legend, Expand) {
-        esriConfig.apiKey = "AAPK2b642b3b897a44e2817fe368b10e8ff8QMEisrPKE9bVSL5P8J6Ybd_lwpF5jslGgs5LS63gAiR2Hz0w7hoJRqTrN_CMv_Gc";
+        "esri/widgets/Expand",
+    ], function (esriConfig, Map, MapView, FeatureLayer,
+        Renderer, SimpleRenderer, Legend, Expand) {
+        esriConfig.apiKey = "<insert api key here>";
 
         // Feature layer to show counties in Idaho
         const counties = new FeatureLayer({
@@ -26,44 +19,35 @@ function loadMap() {
             definitionExpression: "STATE_NAME = 'Idaho'"
         });
 
-        // const colorParams = {
-        //     layer: cows,
-        //     view: view,
-        //     field: "population",
-        //     theme: "high-to-low"
-        // }
-
-        // const sizeParams = {
-        //     layer: cows,
-        //     view: view,
-        //     field: "num_cattle",
-        //     theme: "high-to-low"
-        // };
-
-
-        const referenceScale = 2;
-        const cowRenderer = {
-            type: "simple",
-            visualVariables: [{
-                    type: 'color',
-                    field: 'population'
-                },
-                {
-                    type: 'size',
-                    field: 'num_cattle',
-                    minDataValue: 260,
-                    maxDataValue: 318333,
-                    minSize: 4,
-                    maxSize: 22
+        // Label definition for the cows feature layer
+        const labelClass = {
+            // autocasts as new LabelClass()
+            symbol: {
+                type: "text", // autocasts as new TextSymbol()
+                color: "white",
+                font: {
+                    // autocast as new Font()
+                    family: "arial",
+                    size: 8,
+                    weight: "normal"
                 }
-            ]
+            },
+            labelPlacement: "above-center",
+            labelExpressionInfo: {
+                expression: "$feature.County" // What we want the label to display
+            }
         };
 
         const cows = new FeatureLayer({
-            url: "https://services3.arcgis.com/DDZfXJ6Iyt4EVbZL/arcgis/rest/services/cows/FeatureServer/0",
-            // renderer: cowRenderer
+            // url: "https://services3.arcgis.com/DDZfXJ6Iyt4EVbZL/arcgis/rest/services/idaho_cows/FeatureServer/0",
+            portalItem: {
+                id: "a1b0092e610b4686a4dc666ef22b7ba8"
+            },
+            labelingInfo: [labelClass],
+            popupEnabled: true
         });
 
+        // The cow renderer. How to display the cow info
         cows.renderer = {
             type: "simple",
             symbol: {
@@ -77,16 +61,24 @@ function loadMap() {
                 size: "20px"
             },
             visualVariables: [{
-                    type: 'color',
+                    type: 'color', // Display population by color
                     field: 'population',
-                    stops: [
-                        { value: 852, color: "#2b83ba" },
-                        { value: 59926, color: "#abdda4" },
-                        { value: 119001, color: "#ffffbf" },
-                      ]
+                    stops: [{
+                            value: 852,
+                            color: "#2b83ba"
+                        },
+                        {
+                            value: 59926,
+                            color: "#abdda4"
+                        },
+                        {
+                            value: 119001,
+                            color: "#ffffbf"
+                        },
+                    ]
                 },
                 {
-                    type: 'size',
+                    type: 'size', // Display num_cattle by size
                     field: 'num_cattle',
                     minDataValue: 260,
                     maxDataValue: 318333,
@@ -113,12 +105,27 @@ function loadMap() {
             }
         }
 
-        // cows.renderer = {
-        //     type: "unique-value",
-
-        // }
-
-        // map.add(counties);
+        // Popup template for cows
+        const template = {
+            title: "{county}",
+            content: [{
+                    type: "text",
+                    text: "<b>County:</b> {county}<br><b>Number of cattle:</b> {num_cattle}<br><b>Population:</b> {population}"
+                },
+                {
+                    type: "media",
+                    mediaInfos: [{
+                        type: "pie-chart",
+                        value: {
+                            fields: ["population", "num_cattle"],
+                            tooltipField: "Cows to people"
+                        },
+                        caption: "Cows to people"
+                    }]
+                }
+            ]
+        }
+        cows.popupTemplate = template;
 
         // Setting up the map we display
         const map = new Map({
@@ -135,6 +142,7 @@ function loadMap() {
             center: [-113.97301293981857, 43.73172061673778]
         });
 
+        // The maps legend
         view.ui.add(new Expand({
             content: new Legend({
                 view: view
@@ -142,25 +150,6 @@ function loadMap() {
             view: view,
             expanded: false
         }), "top-right");
-
-
-
-        // colorRendererCreator.createClassBreaksRenderer(colorParams)
-        //     .then(function (response) {
-        //         cows.renderer = response.renderer;
-        //     });
-
-        // sizeRendererCreator.createClassBreaksRenderer(sizeParams)
-        //     .then(function (response) {
-        //         cows.renderer = response.renderer;
-        //     });
-
-        // Editor widget
-        // const editor = new Editor({
-        //     view: view
-        // });
-        // // Add widget to the view
-        // view.ui.add(editor, "top-right");
     });
 }
 
