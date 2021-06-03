@@ -19,6 +19,7 @@ This map is meant to be a fun way to visualize some interesting data.
 * [ArcGis Visual Variables](https://developers.arcgis.com/documentation/mapping-apis-and-services/visualization/data-driven-styles/visual-variables/)
 * [ArcGis Labels](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LabelClass.html)
 * [ArcGis popup with feature layer](https://developers.arcgis.com/javascript/latest/display-a-pop-up/)
+* [Counties data](https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0)
 
 # Future Work
 
