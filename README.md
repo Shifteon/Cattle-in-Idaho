@@ -12,11 +12,13 @@ This map is meant to be a fun way to visualize some interesting data.
 
 * Visual Studio Code
 * ArcGis
+* JavaScript
 
 # Useful Websites
 
 * [ArcGis Visual Variables](https://developers.arcgis.com/documentation/mapping-apis-and-services/visualization/data-driven-styles/visual-variables/)
-* [Web Site Name](http://url.link.goes.here)
+* [ArcGis Labels](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LabelClass.html)
+* [ArcGis popup with feature layer](https://developers.arcgis.com/javascript/latest/display-a-pop-up/)
 
 # Future Work
 
