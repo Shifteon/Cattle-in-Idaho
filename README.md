@@ -6,7 +6,7 @@ Data was collected from the USDA agriculture census. And the ArcGis county table
 
 This map is meant to be a fun way to visualize some interesting data.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/6Cer10N2CGA)
 
 # Development Environment
 
@@ -23,4 +23,4 @@ This map is meant to be a fun way to visualize some interesting data.
 
 # Future Work
 
-* Add popups
+* Improve functionality
