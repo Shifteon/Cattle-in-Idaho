@@ -1,3 +1,7 @@
+/***************************** 
+ * This function loads a map
+ * from arcgis
+ *****************************/
 function loadMap() {
     require([
         "esri/config",
@@ -11,7 +15,7 @@ function loadMap() {
         "esri/widgets/Expand",
     ], function (esriConfig, Map, MapView, FeatureLayer,
         Renderer, SimpleRenderer, Legend, Expand) {
-        esriConfig.apiKey = "<insert api key here>";
+        esriConfig.apiKey = "AAPK568e9aaf89e34dab8650a3462a64c6cdgKxJ7W50yQdKWPfwHAQUVA30YyjpRu9NbB2GejXshNJH4no6nGoVVwbni9mK8EYH";
 
         // Feature layer to show counties in Idaho
         const counties = new FeatureLayer({
@@ -153,4 +157,5 @@ function loadMap() {
     });
 }
 
+// Load the map
 loadMap();
