@@ -7,6 +7,8 @@ Data was collected from the USDA agriculture census. And the ArcGis county table
 This map is meant to be a fun way to visualize some interesting data.
 
 [Software Demo Video](https://youtu.be/6Cer10N2CGA)
+<br>
+[Working Link](https://www.benjaminwyatt.dev/cattle-in-idaho/)
 
 # Development Environment
 
